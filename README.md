@@ -203,10 +203,8 @@ User Prompt: "Build a climate-tech startup for carbon tracking"
 - Input validation and sanitization
 - PII filtering in memory storage
 
----
-
+```
 ## 📁 Repository Structure
-
 ```
 astra-foundry/
 │
@@ -247,7 +245,6 @@ astra-foundry/
 ├── .env.example                   # Environment template
 ├── .gitignore
 └── README.md
-```
 
 ---
 
