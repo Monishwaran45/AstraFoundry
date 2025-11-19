@@ -68,6 +68,108 @@ User Prompt
 Final Startup Blueprint (JSON + Text Summary)
 ```
 
+## 🏗️ Architecture
+
+### System Overview
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      ORCHESTRATOR                           │
+│  (Pipeline Controller, Session Management, Error Handling)  │
+└─────────────────────────────────────────────────────────────┘
+                            │
+        ┌───────────────────┼───────────────────┐
+        │                   │                   │
+        ▼                   ▼                   ▼
+┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│   AGENTS     │    │    TOOLS     │    │   MEMORY     │
+├──────────────┤    ├──────────────┤    ├──────────────┤
+│ 1. Idea      │◄───┤ Google       │    │ Session      │
+│ 2. Research  │    │ Search       │    │ Service      │
+│ 3. Product   │    ├──────────────┤    ├──────────────┤
+│ 4. Roadmap   │    │ Code         │    │ Memory       │
+│ 5. Finance   │◄───┤ Execution    │    │ Bank         │
+│ 6. Pitch     │    ├──────────────┤    └──────────────┘
+└──────────────┘    │ MCP Tools    │
+                    │ (Optional)   │
+                    └──────────────┘
+                            │
+                            ▼
+                    ┌──────────────┐
+                    │ OBSERVABILITY│
+                    ├──────────────┤
+                    │ Logging      │
+                    │ Metrics      │
+                    │ Alerts       │
+                    └──────────────┘
+```
+
+### Agent Pipeline Flow
+
+```
+User Prompt: "Build a climate-tech startup for carbon tracking"
+    │
+    ▼
+┌─────────────────────────────────────────────────────────────┐
+│ 1. IDEA AGENT                                               │
+│    • Generates 4 diverse startup ideas                      │
+│    • Scores: novelty, feasibility, market_fit              │
+│    • Uses Google Search for trend validation               │
+│    • Selects best idea: Climate-Tech Marketplace (0.85)    │
+└─────────────────────────────────────────────────────────────┘
+    │ Output: {"selected_idea": {...}, "ideas": [...]}
+    ▼
+┌─────────────────────────────────────────────────────────────┐
+│ 2. RESEARCH AGENT                                           │
+│    • Searches for market size data                          │
+│    • Estimates TAM: $3.2B, SAM: $1.0B, SOM: $160M         │
+│    • Identifies 3 competitors via search                    │
+│    • Generates SWOT analysis                                │
+└─────────────────────────────────────────────────────────────┘
+    │ Output: {"market": {...}, "competitors": [...], "swot": {...}}
+    ▼
+┌─────────────────────────────────────────────────────────────┐
+│ 3. PRODUCT AGENT                                            │
+│    • Creates 2 user personas (demographics, pain points)    │
+│    • Generates 10 features with RICE scoring                │
+│    • Prioritizes top 7 features for MVP                     │
+│    • Designs 3 core UX flows                                │
+└─────────────────────────────────────────────────────────────┘
+    │ Output: {"personas": [...], "features": [...], "mvp_scope": {...}}
+    ▼
+┌─────────────────────────────────────────────────────────────┐
+│ 4. ROADMAP AGENT                                            │
+│    • Defines system architecture (10 components)            │
+│    • Creates 30-day milestone (deliverables, risks)         │
+│    • Creates 60-day milestone (builds on 30-day)            │
+│    • Creates 90-day milestone (complete MVP)                │
+└─────────────────────────────────────────────────────────────┘
+    │ Output: {"architecture": {...}, "milestones": {...}}
+    ▼
+┌─────────────────────────────────────────────────────────────┐
+│ 5. FINANCE AGENT                                            │
+│    • Calculates OPEX/CAPEX using code execution            │
+│    • Computes CAC, LTV, LTV:CAC ratio, payback period      │
+│    • Projects revenue (conservative/base/optimistic)        │
+│    • Calculates runway: 2 months                            │
+└─────────────────────────────────────────────────────────────┘
+    │ Output: {"costs": {...}, "unit_economics": {...}, "projections": {...}}
+    ▼
+┌─────────────────────────────────────────────────────────────┐
+│ 6. PITCH AGENT                                              │
+│    • Synthesizes all previous agent outputs                 │
+│    • Generates 10 slides: Problem, Solution, Market,        │
+│      Product, Competitive Edge, Business Model, Roadmap,    │
+│      Traction, Financials, Vision                           │
+│    • Includes talking points and visual suggestions         │
+└─────────────────────────────────────────────────────────────┘
+    │ Output: {"slides": [10 complete slides]}
+    ▼
+┌─────────────────────────────────────────────────────────────┐
+│ FINAL OUTPUT                                                │
+│ • blueprint_20251116_134752.json (complete structured data) │
+│ • blueprint_20251116_134752_summary.txt (human-readable)    │
+└─────────────────────────────────────────────────────────────┘
 ---
 
 ## 🔑 Key Features
