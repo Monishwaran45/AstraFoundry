@@ -382,9 +382,7 @@ It is a fully working, extensible system showcasing the future of **Autonomous S
 
 ---
 
-## 📄 License
 
-This project is created for the Kaggle Agents Intensive Capstone.
 
 ---
 
